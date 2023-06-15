@@ -82,16 +82,12 @@ const addUser = function (user) {
   RETURNING *;`;
 
   // define values
-  const values = [`${user.name}`, `${user.email}`, `${user.password}`];
+  const values = [`${user.name}`, `${user.email}`, `${user.password}`]; //TODO: clean up.
 
   // query the db
   return pool
     .query(queryString, values)
     .then((result) => {
-      // if (!result.rows[0]) {
-      //   return null;
-      // }
-      console.log(result.rows[0]);
       return result.rows[0];
     })
     .catch((err) => {
