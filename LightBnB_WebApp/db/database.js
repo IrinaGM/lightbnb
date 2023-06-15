@@ -76,7 +76,6 @@ const getUserWithId = function (id) {
  * @return {Promise<{}>} A promise to the user.
  */
 const addUser = function (user) {
-
   // define query
   const queryString = `INSERT INTO users(name,email,password) 
   VALUES ($1,$2,$3)
@@ -108,7 +107,29 @@ const addUser = function (user) {
  * @return {Promise<[{}]>} A promise to the reservations.
  */
 const getAllReservations = function (guest_id, limit = 10) {
-  return getAllProperties(null, 2);
+  //defire query
+  const queryString = `SELECT reservations.*, properties.*, AVG(property_reviews.rating) as avarage_rating
+  FROM reservations
+  JOIN properties ON reservations.property_id = properties.id
+  JOIN property_reviews ON properties.id = property_reviews.property_id
+  WHERE reservations.guest_id = $1
+  GROUP BY reservations.id, properties.id
+  ORDER BY reservations.start_date ASC
+  LIMIT $2;`;
+
+  //define values
+  const values = [`${guest_id}`, `${limit}`];
+
+  // query the db
+  return pool
+    .query(queryString, values)
+    .then((result) => {
+      console.log("result.rows");
+      return result.rows;
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 };
 
 /// Properties
