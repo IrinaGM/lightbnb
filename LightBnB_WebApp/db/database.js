@@ -32,6 +32,9 @@ const getUserWithEmail = function (email) {
   return pool
     .query(queryString, values)
     .then((result) => {
+      if (!result.rows[0]) {
+        return null;
+      }
       return result.rows[0];
     })
     .catch((err) => {
@@ -45,7 +48,26 @@ const getUserWithEmail = function (email) {
  * @return {Promise<{}>} A promise to the user.
  */
 const getUserWithId = function (id) {
-  return Promise.resolve(users[id]);
+  // define query
+  const queryString = `SELECT *
+      FROM users
+      WHERE id = $1;`;
+
+  // define values
+  const values = [`${id}`];
+
+  // query the db
+  return pool
+    .query(queryString, values)
+    .then((result) => {
+      if (!result.rows[0]) {
+        return null;
+      }
+      return result.rows[0];
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 };
 
 /**
@@ -54,10 +76,28 @@ const getUserWithId = function (id) {
  * @return {Promise<{}>} A promise to the user.
  */
 const addUser = function (user) {
-  const userId = Object.keys(users).length + 1;
-  user.id = userId;
-  users[userId] = user;
-  return Promise.resolve(user);
+
+  // define query
+  const queryString = `INSERT INTO users(name,email,password) 
+  VALUES ($1,$2,$3)
+  RETURNING *;`;
+
+  // define values
+  const values = [`${user.name}`, `${user.email}`, `${user.password}`];
+
+  // query the db
+  return pool
+    .query(queryString, values)
+    .then((result) => {
+      // if (!result.rows[0]) {
+      //   return null;
+      // }
+      console.log(result.rows[0]);
+      return result.rows[0];
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
 };
 
 /// Reservations
