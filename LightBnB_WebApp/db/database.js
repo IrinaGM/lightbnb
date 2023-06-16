@@ -82,7 +82,7 @@ const addUser = function (user) {
   RETURNING *;`;
 
   // define values
-  const values = [`${user.name}`, `${user.email}`, `${user.password}`]; //TODO: clean up.
+  const values = [user.name, user.email, user.password];
 
   // query the db
   return pool
@@ -114,7 +114,7 @@ const getAllReservations = function (guest_id, limit = 10) {
   LIMIT $2;`;
 
   //define values
-  const values = [`${guest_id}`, `${limit}`];
+  const values = [guest_id, limit];
 
   // query the db
   return pool
@@ -137,16 +137,76 @@ const getAllReservations = function (guest_id, limit = 10) {
  * @return {Promise<[{}]>}  A promise to the properties.
  */
 const getAllProperties = function (options, limit = 10) {
-  // define query
-  const queryString = `SELECT * FROM properties LIMIT $1;`;
+  //define query values
+  const values = [];
 
-  // define values
-  const values = [`${limit}`];
+  // define base query
+  let queryString = `SELECT properties.*, AVG(property_reviews.rating) AS average_rating
+  FROM properties
+  LEFT JOIN property_reviews ON properties.id = property_reviews.property_id
+  WHERE 1=1`;
+
+  //check if city option provided
+  if (options.city) {
+    // add option to the query values
+    values.push(`%${options.city}%`);
+    // add to the WHERE clause in the query string
+    queryString += ` AND city LIKE $${values.length}`;
+  }
+
+  //check if owner_id option provided
+  if (options.owner_id) {
+    // add option to the query values
+    values.push(`${options.owner_id}`);
+    // add to the WHERE clause in the query string
+    queryString += ` AND properties.owner_id = $${values.length}`;
+  }
+
+  // add GROUP BY and HAVING to the query string
+  queryString += ` GROUP BY properties.id
+  HAVING 1=1`;
+
+  // check if minimum_rating option provided
+  if (options.minimum_rating) {
+    // add option to the query values
+    values.push(`${options.minimum_rating}`);
+    // add to the HAVING clause in the query string
+    queryString += ` AND AVG(property_reviews.rating) >= $${values.length}`;
+  }
+
+  // check if minimum_price_per_night option provided
+  if (options.minimum_price_per_night) {
+    //convert cost from dollars to cents
+    const minAmountInCents = options.minimum_price_per_night * 100;
+    // add option to the query values
+    values.push(`${minAmountInCents}`);
+    // add to the HAVING clause in the query string
+    queryString += ` AND properties.cost_per_night >= $${values.length}`;
+  }
+
+  // check if maximum_price_per_night option provided
+  if (options.maximum_price_per_night) {
+    //convert cost from dollars to cents
+    const maxAmountInCents = options.maximum_price_per_night * 100;
+    // add option to the query values
+    values.push(`${maxAmountInCents}`);
+    // add to the HAVING clause in the query string
+    queryString += ` AND properties.cost_per_night <= $${values.length}`;
+  }
+
+  // add ORDER BY to the query string
+  queryString += ` ORDER BY cost_per_night ASC`;
+
+  // add LIMIT to the query string
+  // add option to the query values
+  values.push(`${limit}`);
+  queryString += ` LIMIT $${values.length};`;
 
   // query the db
   return pool
     .query(queryString, values)
     .then((result) => {
+      console.log("options", options);
       return result.rows;
     })
     .catch((err) => {
