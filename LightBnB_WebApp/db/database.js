@@ -1,6 +1,3 @@
-const properties = require("./json/properties.json");
-const users = require("./json/users.json");
-
 // import Pool from node-postgres
 const { Pool } = require("pg");
 
@@ -12,7 +9,7 @@ const pool = new Pool({
   database: "lightbnb",
 });
 
-/// Users
+/* --- Users --- */
 
 /**
  * Get a single user from the database given their email.
@@ -95,7 +92,7 @@ const addUser = function (user) {
     });
 };
 
-/// Reservations
+/* --- Reservations --- */
 
 /**
  * Get all reservations for a single user.
@@ -120,7 +117,6 @@ const getAllReservations = function (guest_id, limit = 10) {
   return pool
     .query(queryString, values)
     .then((result) => {
-      console.log("result.rows");
       return result.rows;
     })
     .catch((err) => {
@@ -128,7 +124,7 @@ const getAllReservations = function (guest_id, limit = 10) {
     });
 };
 
-/// Properties
+/* --- Properties --- */
 
 /**
  * Get all properties.
