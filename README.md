@@ -7,7 +7,6 @@ This project demonstrates database design and the usage of server-side JavaScrip
 Lighthouse BnB is an app that allow homeowners to rent out their homes to people on vacation, creating an alternative to hotels and bed and breakfasts. Users can view property information, book reservations, view their reservations, and write reviews.
 This project was developed as part of Lighthouse Labs Web Development course.
 
-
 ## Dependencies
 
 - [bcrypt](https://www.npmjs.com/package/bcrypt)
@@ -41,18 +40,48 @@ $ git clone https://github.com/YOUR-USERNAME/lightbnb
 9. Press Enter. Your local clone will be created.
 
 ## Database Setup Instructions
-1. In the `psql` termianl create a database called `lightbnb` from:
-`CREATE DATABASE lightbnb;`
+
+1. In the `psql` terminal create a database called `lightbnb` from:
+
+```sql
+CREATE DATABASE lightbnb;
+```
+
 2. Connect to the database:
-`\c lightbnb`
-3. Run the following SQL files in order to setup the database:
-3.1 create the tables of the database:
-`\i migrations/01_schema.sql`
-3.2 inport data to the database:
-`\i seeds/01_seeds.sql`
-`\i seeds/02_seeds.sql`
 
+```sql
+\c lightbnb
+```
 
+3. Run the following commands in order to setup the database:
+   3.1 Create tables of the database:
+
+```sql
+\i migrations/01_schema.sql
+```
+
+3.2 Verify tables were created by running the following command:
+
+```sql
+\dt
+```
+
+4 tables should have been created:
+
+- `properties`
+- `property_reviews`
+- `reservetions`
+- `users`
+
+  3.3 Populate database data:
+
+```sql
+\i seeds/01_seeds.sql
+```
+
+```sql
+\i seeds/02_seeds.sql
+```
 
 ## Usage
 
