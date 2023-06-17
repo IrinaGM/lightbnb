@@ -85,6 +85,8 @@ CREATE DATABASE lightbnb;
 
 ## Usage
 
+Under the project folder in your terminal run the following commands:
+
 1. Install dependencies:
 
 ```console
