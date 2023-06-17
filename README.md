@@ -33,71 +33,72 @@ To install Lighthouse BnB, follow these steps:
 7. Change the current working directory to the location where you want the cloned directory.
 8. Type **git clone**, and then paste the URL you copied earlier. It will look like this, with your GitHub username instead of YOUR-USERNAME:
 
-```
-$ git clone https://github.com/YOUR-USERNAME/lightbnb
-```
+   ```
+   $ git clone https://github.com/YOUR-USERNAME/lightbnb
+   ```
 
 9. Press Enter. Your local clone will be created.
 
 ## Database Setup Instructions
 
-1. In the `psql` terminal create a database called `lightbnb` from:
+1. In the `psql` terminal create a database called `lightbnb` using the following command:
 
-```sql
-CREATE DATABASE lightbnb;
-```
+   ```sql
+   CREATE DATABASE lightbnb;
+   ```
 
 2. Connect to the database:
 
-```sql
-\c lightbnb
-```
+   ```sql
+   \c lightbnb
+   ```
 
 3. Run the following commands in order to setup the database:
-   3.1 Create tables of the database:
 
-```sql
-\i migrations/01_schema.sql
-```
+   1. Create database tables:
 
-3.2 Verify tables were created by running the following command:
+      ```sql
+      \i migrations/01_schema.sql
+      ```
 
-```sql
-\dt
-```
+   2. Verify tables were created by running the following command:
 
-4 tables should have been created:
+      ```sql
+      \dt
+      ```
 
-- `properties`
-- `property_reviews`
-- `reservetions`
-- `users`
+      4 tables should have been created:
 
-  3.3 Populate database data:
+      - `properties`
+      - `property_reviews`
+      - `reservetions`
+      - `users`
 
-```sql
-\i seeds/01_seeds.sql
-```
+   3. Populate database data:
 
-```sql
-\i seeds/02_seeds.sql
-```
+   ```sql
+   \i seeds/01_seeds.sql
+   ```
+
+   ```sql
+   \i seeds/02_seeds.sql
+   ```
 
 ## Usage
 
-Under the project folder in your terminal run the following commands:
+Under the project folder (/lightbnb/LightBnB_WebApp) in your terminal run the following commands:
 
 1. Install dependencies:
 
-```console
-npm install
-```
+   ```console
+   npm install
+   ```
 
-2. Start the application:
+2. Start the application in dev mode:
 
-```console
-npm run local
-```
+   ```console
+   npm run local
+   ```
 
 3. Navigate to [http://localhost:3000/](http://localhost:3000/) in your browser.
 

@@ -1,7 +1,7 @@
 {
-  "name": "light_bnb_start",
+  "name": "lightbnb",
   "version": "1.0.0",
-  "description": "",
+  "description": "This project demonstrates database design and the usage of server-side JavaScript to display information from queries to web pages.",
   "main": "index.js",
   "scripts": {
     "sass": "sass --watch styles/main.scss:public/styles/main.css",
@@ -9,7 +9,7 @@
     "start": "node server"
   },
   "keywords": [],
-  "author": "",
+  "author": "IrinaGM",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^3.0.6",
