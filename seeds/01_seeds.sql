@@ -21,9 +21,9 @@ INSERT INTO properties (
   province, 
   post_code, 
   active)
-VALUES (1, 'Cozy Cottage', 'A charming cottage', 'http://example.com/thumbnail1.jpg', 'http://example.com/cover1.jpg', 100, 2, 1, 2, 'USA', '123 Main Street', 'New York', 'NY', '12345', true),
-  (2, 'Modern Apartment', 'Stylish apartment', 'http://example.com/thumbnail2.jpg', 'http://example.com/cover2.jpg', 150, 1, 1, 1, 'Canada', '456 Elm Street', 'Vancouver', 'BC', 'V6G 1B4', true),
-  (3, 'Luxury Villa', 'Elegant villa', 'http://example.com/thumbnail3.jpg', 'http://example.com/cover3.jpg', 500, 3, 3, 4, 'France', '789 Oak Street', 'Paris', 'Paris', '75001', true);
+VALUES (1, 'Cozy Cottage', 'A charming cottage', 'https://images.pexels.com/photos/2079249/pexels-photo-2079249.jpeg?auto=compress&cs=tinysrgb&h=350', 'https://images.pexels.com/photos/2079249/pexels-photo-2079249.jpeg?auto=compress&cs=tinysrgb&h=350', 100, 2, 1, 2, 'USA', '123 Main Street', 'New York', 'NY', '12345', true),
+  (2, 'Modern Apartment', 'Stylish apartment', 'https://images.pexels.com/photos/2079249/pexels-photo-2079249.jpeg?auto=compress&cs=tinysrgb&h=350', 'https://images.pexels.com/photos/2079249/pexels-photo-2079249.jpeg?auto=compress&cs=tinysrgb&h=350', 150, 1, 1, 1, 'Canada', '456 Elm Street', 'Vancouver', 'BC', 'V6G 1B4', true),
+  (3, 'Luxury Villa', 'Elegant villa', 'https://images.pexels.com/photos/2079249/pexels-photo-2079249.jpeg?auto=compress&cs=tinysrgb&h=350', 'https://images.pexels.com/photos/2079249/pexels-photo-2079249.jpeg?auto=compress&cs=tinysrgb&h=350', 500, 3, 3, 4, 'France', '789 Oak Street', 'Paris', 'Paris', '75001', true);
 
 /* Insert data into reservations table */
 INSERT INTO reservations (start_date, end_date, property_id, guest_id)

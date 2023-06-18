@@ -101,7 +101,7 @@ const addUser = function (user) {
  */
 const getAllReservations = function (guest_id, limit = 10) {
   //defire query
-  const queryString = `SELECT reservations.*, properties.*, AVG(property_reviews.rating) as avarage_rating
+  const queryString = `SELECT reservations.*, properties.*, AVG(property_reviews.rating) as average_rating
   FROM reservations
   JOIN properties ON reservations.property_id = properties.id
   JOIN property_reviews ON properties.id = property_reviews.property_id
@@ -109,6 +109,8 @@ const getAllReservations = function (guest_id, limit = 10) {
   GROUP BY reservations.id, properties.id
   ORDER BY reservations.start_date ASC
   LIMIT $2;`;
+
+  //property_reviews.rating
 
   //define values
   const values = [guest_id, limit];
